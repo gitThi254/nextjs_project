@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ token, session }) {
-      session.user.role = token.role;
+      session.user.role = token?.role;
       return session;
     },
   },
