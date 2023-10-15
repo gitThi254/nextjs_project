@@ -1,5 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions, User } from "next-auth";
 import client from "@/libs/prismadb";
 import bcryptjs from "bcryptjs";
 
@@ -20,11 +20,11 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: any; user: User & { role?: string } }) {
       if (user) {
         return {
           ...token,
-          role: user.role,
+          role: user?.role,
         };
       }
       return token;
